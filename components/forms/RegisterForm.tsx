@@ -9,18 +9,22 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Control, useForm } from 'react-hook-form'
-import CustomFormField from '../CustomFormField'
+import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import SubmitButton from '../SubmitButton'
 import { useState } from 'react'
-import { userFormValidation } from '@/lib/validation'
+import { PatientFormValidation } from '@/lib/validation'
 import { useRouter } from 'next/navigation'
-import { createUser } from '@/lib/actions/patient.actions'
-import { FormFieldType } from './PatientForm'
+import { createUser, registerPatient } from '@/lib/actions/patient.actions'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
-import { Doctors, GenderOptions, IdentificationTypes } from '@/constatns'
+import {
+  Doctors,
+  GenderOptions,
+  IdentificationTypes,
+  PatientFormDefaultValues,
+} from '@/constatns'
 import { Label } from '../ui/label'
 import { SelectItem } from '@/components/ui/select'
 import Image from 'next/image'
@@ -28,31 +32,50 @@ import FileUpload from '../ui/FileUploader'
 const RegisterForm = ({ user }: { user: User }) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const form = useForm<z.infer<typeof userFormValidation>>({
-    resolver: zodResolver(userFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
+      ...PatientFormDefaultValues,
       name: '',
       email: '',
       phone: '',
     },
   })
 
-  const onSubmit = async ({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof userFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true)
+    let formData
+    if (
+      values.identificationDocument &&
+      values.identificationDocument.length > 0
+    ) {
+      const blobFile = new Blob([values.identificationDocument[0]], {
+        type: values.identificationDocument[0].type,
+      })
+      formData = new FormData()
+      formData.append('blobFile', blobFile)
+      formData.append('fileName', values.identificationDocument[0].name)
+    }
     try {
-      const userData = { name, email, phone }
-      const user = await createUser(userData)
+      const patientData = {
+        ...values,
+        userId: user.$id,
+        identificationDocument: values.identificationDocument
+          ? formData
+          : undefined,
+        birthDate: new Date(values.birthDate),
+      }
+      console.log({ patientData })
 
-      if (user!) {
-        router.push(`/patients/${user.$id}/register}`)
+      // @ts-ignore
+      const newPaient = await registerPatient(patientData)
+      if (newPaient) {
+        router.push(`/patients/${user.$id}/new-appointment`)
       }
     } catch (error) {
       console.log(error)
     }
+    setIsLoading(false)
   }
   return (
     <Form {...form}>
@@ -217,11 +240,11 @@ const RegisterForm = ({ user }: { user: User }) => {
           />
 
           <CustomFormField
+            fieldType={FormFieldType.INPUT}
             control={form.control}
-            fieldType={FormFieldType.PHONE_INPUT}
             name="insurancePolicyNumber"
-            label="Emergency Policy Number"
-            placeholder="ABC-123456789"
+            label="Insurance policy number"
+            placeholder="ABC123456789"
           />
         </div>
 
@@ -295,7 +318,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Scanned copy of identification Document"
           renderSkeleton={(field) => (
             <FormControl>
-              <FileUpload files={field.vaue} onChnage={field.onChange} />
+              <FileUpload files={field.value} onChnage={field.onChange} />
             </FormControl>
           )}
         />

@@ -9,6 +9,8 @@ type FileUploaderProps = {
 }
 const FileUpload = ({ files, onChnage }: FileUploaderProps) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    console.log(files, acceptedFiles)
+
     onChnage(acceptedFiles)
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
@@ -34,7 +36,7 @@ const FileUpload = ({ files, onChnage }: FileUploaderProps) => {
           />
           <div className="file-upload_label">
             <p className="text-14-regular">
-              <span className="text-green-500">Click to upload</span>  or drage
+              <span className="text-green-500">Click to upload</span> or drage
               and drop
             </p>
             <p>SVG, PNG,JPG or GIF (max 800*400)</p>

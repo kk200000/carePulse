@@ -9,31 +9,23 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Control, useForm } from 'react-hook-form'
-import CustomFormField from '../CustomFormField'
+import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import SubmitButton from '../SubmitButton'
 import { useState } from 'react'
-import { userFormValidation } from '@/lib/validation'
+import { UserFormValidation } from '@/lib/validation'
 import { useRouter } from 'next/navigation'
 import { createUser } from '@/lib/actions/patient.actions'
 
-export enum FormFieldType {
-  INPUT = 'input',
-  TEXTAREA = 'textarea',
-  PHONE_INPUT = 'phoneInput',
-  CHECKBOX = 'checkbox',
-  DATE_PICKER = 'datePicker',
-  SELECT = 'select',
-  SKELETON = 'skeleton',
-}
+
 
 const PaientsForm = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const form = useForm<z.infer<typeof userFormValidation>>({
-    resolver: zodResolver(userFormValidation),
+  const form = useForm<z.infer<typeof UserFormValidation>>({
+    resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: '',
       email: '',
@@ -45,7 +37,7 @@ const PaientsForm = () => {
     name,
     email,
     phone,
-  }: z.infer<typeof userFormValidation>) => {
+  }: z.infer<typeof UserFormValidation>) => {
     setIsLoading(true)
     try {
       const userData = { name, email, phone }
@@ -57,6 +49,7 @@ const PaientsForm = () => {
     } catch (error) {
       console.log(error)
     }
+    setIsLoading(false)
   }
   return (
     <Form {...form}>
