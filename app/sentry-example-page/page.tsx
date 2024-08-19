@@ -65,7 +65,7 @@ export default function Page() {
 
         <p>
           Next, look for the error on the{" "}
-          <a href="https://111-to.sentry.io/issues/?project=4507801562906624">Issues Page</a>.
+          <a href="https://hugo-kwong.sentry.io/settings/organization/">Issues Page</a>.
         </p>
         <p style={{ marginTop: "24px" }}>
           For more information, see{" "}
