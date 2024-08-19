@@ -1,21 +1,25 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button";
-import { Doctors } from "@/constatns";
-import { getAppointment } from "@/lib/actions/appointment.actions";
-import { formatDateTime } from "@/lib/utils";
+import { Button } from '@/components/ui/button'
+import { Doctors } from '@/constatns'
+import { getAppointment } from '@/lib/actions/appointment.actions'
+import { formatDateTime } from '@/lib/utils'
+import * as Sentry from '@sentry/nextjs'
+import { getUser } from '@/lib/actions/patient.actions'
 
 const RequestSuccess = async ({
   searchParams,
   params: { userId },
 }: SearchParamProps) => {
-  const appointmentId = (searchParams?.appointmentId as string) || "";
-  const appointment = await getAppointment(appointmentId);
-
+  const appointmentId = (searchParams?.appointmentId as string) || ''
+  const appointment = await getAppointment(appointmentId)
+  const user = await getUser(userId)
   const doctor = Doctors.find(
     (doctor) => doctor.name === appointment.primaryPhysician
-  );
+  )
+
+  Sentry.metrics.set('user_view_appointment-success',user?.name) // Sentry 监听用户成功预约
 
   return (
     <div className=" flex h-screen max-h-screen px-[5%]">
@@ -76,7 +80,7 @@ const RequestSuccess = async ({
         <p className="copyright">© 2024 CarePluse</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RequestSuccess;
+export default RequestSuccess

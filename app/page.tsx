@@ -1,10 +1,18 @@
+import {PasskeyModal} from '@/components/PasskeyModal'
 import PaientsForm from '@/components/forms/PatientForm'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
-export default function Home() {
+export default function Home(props:SearchParamProps) {
+  console.log({props});
+  
+  const {searchParams}:any = props
+  const isAdmin = searchParams?.admin === 'true'
   return (
     <div className="flex h-screen max-h-screen">
+      {isAdmin && (
+        <PasskeyModal/>
+      )}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image
@@ -28,7 +36,7 @@ export default function Home() {
         </div>
       </section>
       <Image
-        className="side-img max-w-[390px]"
+        className="side-img max-w-[50%]"
         width={1000}
         height={1000}
         src="/assets/images/onboarding-img.png"

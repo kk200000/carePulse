@@ -4,8 +4,14 @@ import { Button } from '@/components/ui/button'
 import { getPatient } from '@/lib/actions/patient.actions'
 import Image from 'next/image'
 import Link from 'next/link'
+import * as Sentry from '@sentry/nextjs'
+
 const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
   const patient = await getPatient(userId)
+
+
+  Sentry.metrics.set('user_view_new-appointment', patient?.name) // Sentry 监听用户预约
+
   return (
     <div className="flex h-screen max-h-screen">
       <section className="remove-scrollbar container my-auto">
@@ -16,9 +22,14 @@ const NewAppointment = async ({ params: { userId } }: SearchParamProps) => {
             height={1000}
             width={1000}
             alt={'patient'}
+            unoptimized
           />
 
-          <AppointmentForm type="create" userId={userId}  patientId={patient?.$id} />
+          <AppointmentForm
+            type="create"
+            userId={userId}
+            patientId={patient?.$id}
+          />
 
           <p className="copyright mt-10 py-12 ">© 2024 CarePluse</p>
         </div>
