@@ -13,6 +13,8 @@ import {
 } from '../appwrite.config'
 import { formatDateTime, parseStringify } from '../utils'
 
+console.log(process.env,{APPOINTMENT_COLLECTION_ID});
+
 //  CREATE APPOINTMENT
 export const createAppointment = async (
   appointment: CreateAppointmentParams
