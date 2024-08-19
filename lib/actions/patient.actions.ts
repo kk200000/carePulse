@@ -4,7 +4,7 @@ import {
   BUCKET_ID,
   DATABASE_ID,
   ENDPOINT,
-  PATIENT_Collection_ID,
+  PATIENT_COLLECTION_ID,
   PROJECT_ID,
   database,
   storage,
@@ -60,7 +60,7 @@ export const registerPatient = async ({
 
     const newPatient = await database.createDocument(
       DATABASE_ID!,
-      PATIENT_Collection_ID!,
+      PATIENT_COLLECTION_ID!,
       ID.unique(),
       {
         identificationDocumentId: file?.$id || null,
@@ -78,7 +78,7 @@ export const getPatient = async (userId: string) => {
   try {
     const patients = await database.listDocuments(
       DATABASE_ID!,
-      PATIENT_Collection_ID!,
+      PATIENT_COLLECTION_ID!,
       [Query.equal('userId', userId)]
     )
 
