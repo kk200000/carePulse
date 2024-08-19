@@ -1,11 +1,11 @@
 'use server'
 import { ID, Query } from 'node-appwrite'
 import {
-  // BUCKET_ID,
-  // DATABASE_ID,
-  // ENDPOINT,
+  BUCKET_ID,
+  DATABASE_ID,
+  ENDPOINT,
   // PATIENT_COLLECTION_ID,
-  // PROJECT_ID,
+  PROJECT_ID,
   database,
   storage,
   users,
@@ -14,11 +14,10 @@ import { parseStringify } from '../utils'
 import { InputFile } from 'node-appwrite/file'
 
  const {
-  PROJECT_ID,
-  DATABASE_ID,
+  // PROJECT_ID,
+  // DATABASE_ID,
   // PATIENT_COLLECTION_ID,
-  NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
-  NEXT_PUBLIC_ENDPOINT: ENDPOINT,
+  // NEXT_PUBLIC_ENDPOINT: ENDPOINT,
 } = process.env
 
 const PATIENT_COLLECTION_ID =  process.env?.PATIENT_COLLECTION_ID
