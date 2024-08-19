@@ -13,9 +13,6 @@ import {
 } from '../appwrite.config'
 import { formatDateTime, parseStringify } from '../utils'
 
-if(APPOINTMENT_COLLECTION_ID === undefined){
-  APPOINTMENT_COLLECTION_ID = process.env.APPOINTMENT_COLLECTION_ID
-}
 
 console.log('测试输出:',process.env,{APPOINTMENT_COLLECTION_ID,database},'结束测试');
 
