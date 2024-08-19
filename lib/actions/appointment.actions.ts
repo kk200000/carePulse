@@ -14,7 +14,6 @@ import {
 import { formatDateTime, parseStringify } from '../utils'
 
 const APPOINTMENT_COLLECTION_ID = process.env?.APPOINTMENT_COLLECTION_ID || '66b7525900150b95861f'
-// const DATABASE_ID = process.env?.DATABASE_ID
 
 //  CREATE APPOINTMENT
 export const createAppointment = async (

@@ -4,7 +4,7 @@ import {
   BUCKET_ID,
   DATABASE_ID,
   ENDPOINT,
-  // PATIENT_COLLECTION_ID,
+  PATIENTS_ID,
   PROJECT_ID,
   database,
   storage,
@@ -13,15 +13,9 @@ import {
 import { parseStringify } from '../utils'
 import { InputFile } from 'node-appwrite/file'
 
- const {
-  // PROJECT_ID,
-  // DATABASE_ID,
-  // PATIENT_COLLECTION_ID,
-  // NEXT_PUBLIC_ENDPOINT: ENDPOINT,
-} = process.env
 
-const PATIENT_COLLECTION_ID =  process.env?.PATIENT_COLLECTION_ID
-console.log('测试输出:',{BUCKET_ID,PROJECT_ID,PATIENT_COLLECTION_ID,DATABASE_ID},'结束测试');
+// const PATIENT_COLLECTION_ID =  process.env?.PATIENT_COLLECTION_ID
+console.log('测试输出:',{PATIENTS_ID,DATABASE_ID},'结束测试');
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -71,7 +65,7 @@ export const registerPatient = async ({
 
     const newPatient = await database.createDocument(
       DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
+      PATIENTS_ID!,
       ID.unique(),
       {
         identificationDocumentId: file?.$id || null,
@@ -89,7 +83,7 @@ export const getPatient = async (userId: string) => {
   try {
     const patients = await database.listDocuments(
       DATABASE_ID!,
-      PATIENT_COLLECTION_ID!,
+      PATIENTS_ID!,
       [Query.equal('userId', userId)]
     )
 
