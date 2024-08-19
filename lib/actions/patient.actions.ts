@@ -21,6 +21,8 @@ import { InputFile } from 'node-appwrite/file'
   NEXT_PUBLIC_ENDPOINT: ENDPOINT,
 } = process.env
 
+console.log('测试输出:',{BUCKET_ID,PROJECT_ID,PATIENT_COLLECTION_ID,DATABASE_ID},'结束测试');
+
 export const createUser = async (user: CreateUserParams) => {
   try {
     const newUser = await users.create(
