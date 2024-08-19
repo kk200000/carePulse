@@ -13,7 +13,7 @@ import {
 } from '../appwrite.config'
 import { formatDateTime, parseStringify } from '../utils'
 
-console.log('测试输出:',process.env,{APPOINTMENT_COLLECTION_ID},'结束测试');
+console.log('测试输出:',process.env,{APPOINTMENT_COLLECTION_ID,database},'结束测试');
 
 //  CREATE APPOINTMENT
 export const createAppointment = async (
