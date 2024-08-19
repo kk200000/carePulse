@@ -6,15 +6,16 @@ import { ID, Query } from 'node-appwrite'
 import { Appointment } from '@/types/appwrite.types'
 
 import {
-  APPOINTMENT_COLLECTION_ID,
-  DATABASE_ID,
+  // APPOINTMENT_COLLECTION_ID,
+  // DATABASE_ID,
   database,
   messaging,
 } from '../appwrite.config'
 import { formatDateTime, parseStringify } from '../utils'
 
-
-console.log('测试输出:',process.env,{APPOINTMENT_COLLECTION_ID,database},'结束测试');
+const APPOINTMENT_COLLECTION_ID = process.env?.APPOINTMENT_COLLECTION_ID
+const DATABASE_ID = process.env?.DATABASE_ID
+console.log('测试输出:',process.env,{APPOINTMENT_COLLECTION_ID},'结束测试');
 
 //  CREATE APPOINTMENT
 export const createAppointment = async (

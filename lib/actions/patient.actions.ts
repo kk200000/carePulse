@@ -1,17 +1,26 @@
 'use server'
 import { ID, Query } from 'node-appwrite'
 import {
-  BUCKET_ID,
-  DATABASE_ID,
-  ENDPOINT,
-  PATIENT_COLLECTION_ID,
-  PROJECT_ID,
+  // BUCKET_ID,
+  // DATABASE_ID,
+  // ENDPOINT,
+  // PATIENT_COLLECTION_ID,
+  // PROJECT_ID,
   database,
   storage,
   users,
 } from '../appwrite.config'
 import { parseStringify } from '../utils'
 import { InputFile } from 'node-appwrite/file'
+
+ const {
+  PROJECT_ID,
+  DATABASE_ID,
+  PATIENT_COLLECTION_ID,
+  NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
+  NEXT_PUBLIC_ENDPOINT: ENDPOINT,
+} = process.env
+
 export const createUser = async (user: CreateUserParams) => {
   try {
     const newUser = await users.create(
