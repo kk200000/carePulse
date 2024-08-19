@@ -15,7 +15,6 @@ import { formatDateTime, parseStringify } from '../utils'
 
 const APPOINTMENT_COLLECTION_ID = process.env?.APPOINTMENT_COLLECTION_ID || '66b7525900150b95861f'
 const DATABASE_ID = process.env?.DATABASE_ID
-console.log('测试输出:',process.env,{APPOINTMENT_COLLECTION_ID,DATABASE_ID,database},'结束测试');
 
 //  CREATE APPOINTMENT
 export const createAppointment = async (
