@@ -13,9 +13,8 @@ import {
 import { parseStringify } from '../utils'
 import { InputFile } from 'node-appwrite/file'
 
-
 // const PATIENT_COLLECTION_ID =  process.env?.PATIENT_COLLECTION_ID
-console.log('测试输出:',{PATIENTS_ID,DATABASE_ID},'结束测试');
+console.log('测试输出:', { PATIENTS_ID, DATABASE_ID }, '结束测试')
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -81,17 +80,12 @@ export const registerPatient = async ({
 
 export const getPatient = async (userId: string) => {
   try {
-    const patients = await database.listDocuments(
-      DATABASE_ID!,
-      PATIENTS_ID!,
-      [Query.equal('userId', userId)]
-    )
+    const patients = await database.listDocuments(DATABASE_ID!, PATIENTS_ID!, [
+      Query.equal('userId', userId),
+    ])
 
     return parseStringify(patients.documents[0])
   } catch (error: any) {
     console.log({ error })
   }
 }
-
-
-

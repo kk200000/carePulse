@@ -1,10 +1,12 @@
+"use client"
+import AlertAccountNotMatch from '@/components/AlertAccountNotMatch/AlertAccountNotMatch'
 import {PasskeyModal} from '@/components/PasskeyModal'
 import PaientsForm from '@/components/forms/PatientForm'
-import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 export default function Home(props:SearchParamProps) {
-  
+  const [openAlert,setOpenAlert] = useState(false)
   const {searchParams}:any = props
   const isAdmin = searchParams?.admin === 'true'
   return (
@@ -22,8 +24,8 @@ export default function Home(props:SearchParamProps) {
             alt={'patient'}
           />
 
-          <PaientsForm />
-    
+          <PaientsForm setOpen={setOpenAlert}/>
+          <AlertAccountNotMatch open={openAlert} setOpen={setOpenAlert}/>
           <p className="copyright justify-items-end text-dark-500 xl:text-left">
           © 2024 CarePluse
           </p>

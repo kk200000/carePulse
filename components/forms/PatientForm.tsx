@@ -1,27 +1,16 @@
 'use client'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Control, useForm } from 'react-hook-form'
-import CustomFormField, { FormFieldType } from "../CustomFormField";
+import { Form } from '@/components/ui/form'
+import { useForm } from 'react-hook-form'
+import CustomFormField, { FormFieldType } from '../CustomFormField'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Button } from '@/components/ui/button'
 import SubmitButton from '../SubmitButton'
 import { useState } from 'react'
 import { UserFormValidation } from '@/lib/validation'
 import { useRouter } from 'next/navigation'
 import { createUser } from '@/lib/actions/patient.actions'
 
-
-
-const PaientsForm = () => {
+const PaientsForm = ({ setOpen }: any) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const form = useForm<z.infer<typeof UserFormValidation>>({
@@ -43,8 +32,11 @@ const PaientsForm = () => {
       const userData = { name, email, phone }
       const user = await createUser(userData)
 
-      if (user!) {
+      if (user) {
         router.push(`/patients/${user.$id}/register`)
+      } else if (!user) {
+        // 邮箱没有正确匹配
+        setOpen(true)
       }
     } catch (error) {
       console.log(error)
