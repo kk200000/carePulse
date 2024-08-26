@@ -24,6 +24,12 @@
     /* background: #1e2238; */
     background: transparent;
   }
+
+  /* Remove scrollbar for Firefox IE Edge */
+  .remove-scrollbar {
+    scrollbar-width: none; /* 隐藏滚动条 */
+    -ms-overflow-style: none; /* IE和Edge */
+  }
 }
 
 @layer utilities {
